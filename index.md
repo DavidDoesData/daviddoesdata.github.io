@@ -1,3 +1,8 @@
+---
+layout: default
+title: Hank Quinlan, Horrible Cop
+---
+
 ## Who Am I?
 
 Uh, hi. I'm David.

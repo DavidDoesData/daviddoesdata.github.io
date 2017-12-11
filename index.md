@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Hank Quinlan, Horrible Cop
+title: DavidDoesData
+theme: jekyll-theme-minimal
 ---
 
 ## Who Am I?

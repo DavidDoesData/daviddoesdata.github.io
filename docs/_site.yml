@@ -1,0 +1,8 @@
+name: "David Does Data"
+navbar:
+  title: "David Does data"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html

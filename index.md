@@ -1,8 +1,3 @@
----
-layout: default
-title: DavidDoesData
-theme: jekyll-theme-minimal
----
 
 ## Who Am I?
 

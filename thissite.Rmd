@@ -10,5 +10,20 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 
 ## David Does Data
-####[<i class="fa fa-github"></i> Repo]("https://github.com/DavidDoesData/daviddoesdata.github.io")
+####[<i class="fa fa-github"></i> Repo](https://github.com/DavidDoesData/daviddoesdata.github.io)
+***
 
+## Project Goal
+Build a site using R Markdown in R Studio. Host it on GitHub.
+
+## Challenges
+I don't use a ton of markdown in general, and I'm a lazy UI designer. I'll have to start with a base set of styles, and then either alter that css or create a new css file based on that one.
+
+We'll see how it goes.
+
+Also, I want to try embedding a slide show. I'm not sure how that'll work with the site being hosted on GitHub.
+
+## Useful Links
+* [R Markdown Websites](http://rmarkdown.rstudio.com/rmarkdown_websites.html)
+* [R Markdown Reference](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+* [R Markdown Cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)

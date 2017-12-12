@@ -8,7 +8,7 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Projects"
-      icon: fa-github
+      icon: fa-git-square
       menu:
         - text: "David Does Data"
           href: thissite.html
@@ -23,7 +23,7 @@ navbar:
       href: https://www.linkedin.com/in/hughesdavidj/
 output:
   html_document:
-    theme: sandstone
+    theme: united
     highlight: textmate
     include:
       after_body: footer.html

@@ -4,24 +4,33 @@ title: "David Does Data"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
+## Who Am I
+Uh, hi. I'm David.
 
-## R Markdown
+I've been a professional application developer for about 10 years. In that time I've worked in startups, private, and publically traded companies. I've built a lot of forms to put data into databases I designed, collected from a user base that the company big wigs can run reports on.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+And that's it.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Every month or quarter or year, a bunch of papers get printed, someone looks at them, and then files them away to be shredded 10 years later. I've never really needed to do anything with data beyond that. That's changing.
 
-```{r cars}
-summary(cars)
-```
+I was introduced to the idea of predicitive analytics, and I got excited about it. This repo will house my data related projects, that aren't for work anyway.
 
-## Including Plots
+I have some big ideas, and I'm probably too ignorant of what I'm getting into to stop before I start. There's nothing I like more than the challenge of doing something I'm wholly unqualified to do, and I am *very* unqualified for this undertaking.
 
-You can also embed plots, for example:
+I would be really cool to be able to describe my job as "trying to see the future". I mean, what's more challenging than that?
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Ideas
+I have some ideas that sound good, and some that sound impossible. I'll list them here, and link you to the project overviews I have on the site (when possible). Alternatively, you can use the "Project" tab in the nav to do the same thing.
+
+* [College Basketball Prediction Engine](cbbpa.html)
+* Pump & Dump Penny Stock Prediction Engine
+* Kickstarter Success Prediction Engine
+
+## YouTube <a href="https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw"><i class="fa fa-youtube-play fa-lg"></i></a>
+I decided I'd try putting some videos discussing what I'm trying to accomplish, and what I need to do to actually create a working product. You can see that by clicking the YouTube symbol in the navigation bar. 
+
+Projects that have an associated playlist will have it listed on the project overview pages.
+

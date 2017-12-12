@@ -4,15 +4,16 @@ title: "Project Overview:"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
 ## College Basketball Prediction Engine
-[(View Repo)]("https://github.com/DavidDoesData/cbbpa")
+####[<i class="fa fa-github fa-lg"></i> Repo]("https://github.com/DavidDoesData/cbbpa") [<i class="fa fa-youtube-play fa-lg"></i> Playlist]("https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_")
 
 
 ### Project Goal
 
-This project is an attempt at making a predicitive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads.
+This project is an attempt at making a predictive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads.
 
 ### The Data
 
@@ -25,11 +26,18 @@ install.packages('rvest')
 
 This is where we're looking for links to crawl: [ESPN](http://www.espn.com/mens-college-basketball/teams)
 
+We can find the Team Ids by searching for something that looks like this:
+```
+/ncb/teams/stats?teamId=XXXX
+```
+
 The url structures we'll be crawling are:
 ```
-http://www.espn.com/ncb/teams/schedule?teamId=399
-
+http://www.espn.com/mens-college-basketball/team/schedule/_/id/XXXX/year/YYYY
+XXXX: Team Id
+YYYY: The Year
 ```
+We need the year, so we can go back in time and grab historical results.
 
 The html structure we need to scrape and build a dataset from:
 ```
@@ -74,4 +82,19 @@ The html structure we need to scrape and build a dataset from:
     1-0 (0-0)
   </td>
 </tr>
+```
+
+### Let's Break That Down A Bit
+First things first, we only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the followinf:
+```
+<li class="game-status">
+  vs
+</li>
+```
+
+Second, we want the opponents team name and id. We can find that here:
+```
+<a href="http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels">
+  Iona
+</a>
 ```

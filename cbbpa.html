@@ -15,7 +15,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -100,34 +100,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 60px;
+  padding-top: 61px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 
 .section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 </style>
 
@@ -195,29 +195,29 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="cbbpa.html">College Basketball Prediction Engine</a>
+      <a href="thissite.html">David Does Data</a>
     </li>
     <li>
-      <a href="thissite.html">David Does Data</a>
+      <a href="cbbpa.html">College Basketball Prediction Engine</a>
     </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://twitter.com/yegDavid">
-    <span class="fa fa-twitter fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw">
     <span class="fa fa-youtube fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw">
+  <a href="https://twitter.com/yegDavid">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/hughesdavidj/">
     <span class="fa fa-linkedin fa-lg"></span>
      
   </a>
@@ -238,19 +238,25 @@ $(document).ready(function () {
 
 <div id="college-basketball-prediction-engine" class="section level2">
 <h2>College Basketball Prediction Engine</h2>
-<p><a href="%22https://github.com/DavidDoesData/cbbpa%22">(View Repo)</a></p>
+<div id="repo-playlist" class="section level4">
+<h4><a href="%22https://github.com/DavidDoesData/cbbpa%22"><i class="fa fa-github fa-lg"></i> Repo</a> <a href="%22https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_%22"><i class="fa fa-youtube-play fa-lg"></i> Playlist</a></h4>
+</div>
 <div id="project-goal" class="section level3">
 <h3>Project Goal</h3>
-<p>This project is an attempt at making a predicitive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads.</p>
+<p>This project is an attempt at making a predictive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads.</p>
 </div>
 <div id="the-data" class="section level3">
 <h3>The Data</h3>
 <p>I’m scraping it from ESPN.com. I’ll need to write a web crawler/scraper to collect the data. Since I’m coding in R, I’ll be using Rvest.</p>
 <pre class="r"><code>install.packages(&#39;rvest&#39;)</code></pre>
 <p>This is where we’re looking for links to crawl: <a href="http://www.espn.com/mens-college-basketball/teams">ESPN</a></p>
+<p>We can find the Team Ids by searching for something that looks like this:</p>
+<pre><code>/ncb/teams/stats?teamId=XXXX</code></pre>
 <p>The url structures we’ll be crawling are:</p>
-<pre><code>http://www.espn.com/ncb/teams/schedule?teamId=399
-</code></pre>
+<pre><code>http://www.espn.com/mens-college-basketball/team/schedule/_/id/XXXX/year/YYYY
+XXXX: Team Id
+YYYY: The Year</code></pre>
+<p>We need the year, so we can go back in time and grab historical results.</p>
 <p>The html structure we need to scrape and build a dataset from:</p>
 <pre><code>&lt;tr class=&quot;oddrow team-41-314&quot;&gt;
   &lt;td&gt;
@@ -293,6 +299,17 @@ $(document).ready(function () {
     1-0 (0-0)
   &lt;/td&gt;
 &lt;/tr&gt;</code></pre>
+</div>
+<div id="lets-break-that-down-a-bit" class="section level3">
+<h3>Let’s Break That Down A Bit</h3>
+<p>First things first, we only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the followinf:</p>
+<pre><code>&lt;li class=&quot;game-status&quot;&gt;
+  vs
+&lt;/li&gt;</code></pre>
+<p>Second, we want the opponents team name and id. We can find that here:</p>
+<pre><code>&lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
+  Iona
+&lt;/a&gt;</code></pre>
 </div>
 </div>
 

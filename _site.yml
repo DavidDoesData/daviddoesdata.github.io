@@ -15,5 +15,15 @@ navbar:
         - text: "David Does Data"
           href: thissite.html
   right:
-    - icon: fa-question fa-lg
-      href: https://example.com
+    - icon: fa-youtube fa-lg
+      href: https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw
+    - icon: fa-twitter fa-lg
+      href: https://twitter.com/yegDavid
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/hughesdavidj/
+output:
+  html_document:
+    theme: flatly
+    highlight: textmate
+    include:
+      after_body: footer.html

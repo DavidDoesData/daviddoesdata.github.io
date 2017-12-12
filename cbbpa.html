@@ -15,12 +15,12 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -100,34 +100,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 </style>
 
@@ -205,8 +205,20 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://example.com">
-    <span class="fa fa-question fa-lg"></span>
+  <a href="https://twitter.com/yegDavid">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw">
+    <span class="fa fa-youtube fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw">
+    <span class="fa fa-linkedin fa-lg"></span>
      
   </a>
 </li>
@@ -226,8 +238,65 @@ $(document).ready(function () {
 
 <div id="college-basketball-prediction-engine" class="section level2">
 <h2>College Basketball Prediction Engine</h2>
+<p><a href="%22https://github.com/DavidDoesData/cbbpa%22">(View Repo)</a></p>
+<div id="project-goal" class="section level3">
+<h3>Project Goal</h3>
+<p>This project is an attempt at making a predicitive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads.</p>
+</div>
+<div id="the-data" class="section level3">
+<h3>The Data</h3>
+<p>I’m scraping it from ESPN.com. I’ll need to write a web crawler/scraper to collect the data. Since I’m coding in R, I’ll be using Rvest.</p>
+<pre class="r"><code>install.packages(&#39;rvest&#39;)</code></pre>
+<p>This is where we’re looking for links to crawl: <a href="http://www.espn.com/mens-college-basketball/teams">ESPN</a></p>
+<p>The url structures we’ll be crawling are:</p>
+<pre><code>http://www.espn.com/ncb/teams/schedule?teamId=399
+</code></pre>
+<p>The html structure we need to scrape and build a dataset from:</p>
+<pre><code>&lt;tr class=&quot;oddrow team-41-314&quot;&gt;
+  &lt;td&gt;
+    Fri, Nov 10
+  &lt;/td&gt;
+  &lt;td align=&quot;left&quot;&gt;
+    &lt;ul class=&quot;game-schedule&quot;&gt;
+      &lt;li class=&quot;game-status&quot;&gt;
+        vs
+      &lt;/li&gt;
+      &lt;li class=&quot;team-logo-small logo-ncaa-small&quot;&gt;
+        &lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
+          &lt;img src=&quot;http://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/314.png&amp;amp;w=80&amp;amp;h=80&amp;amp;transparent=true&quot;&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+      
+      &lt;li class=&quot;team-name&quot;&gt;
+        &lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
+          Iona
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/td&gt;
+  &lt;td&gt;
+    &lt;ul class=&quot;game-schedule&quot;&gt;
+      &lt;li class=&quot;game-status win&quot;&gt;
+        &lt;span class=&quot;greenfont&quot;&gt;
+          W
+        &lt;/span&gt;
+      &lt;/li&gt;
+      
+      &lt;li class=&quot;score&quot;&gt;
+        &lt;a href=&quot;//www.espn.com/ncb/recap/_/gameId/400989985&quot;&gt;
+          69-67
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/td&gt;
+  &lt;td&gt;
+    1-0 (0-0)
+  &lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+</div>
 </div>
 
+<p>Copyright &copy; 2017 DavidDoesData. All rights reserved.</p>
 
 
 

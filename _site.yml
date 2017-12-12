@@ -2,6 +2,18 @@ output_dir: "."
 name: "David Does Data"
 navbar:
   title: "David Does Data"
+  type: inverse
   left:
     - text: "Home"
+      icon: fa-home
       href: index.html
+    - text: "Projects"
+      icon: fa-github
+      menu:
+        - text: "College Basketball Prediction Engine"
+          href: cbbpa.html
+        - text: "David Does Data"
+          href: thissite.html
+  right:
+    - icon: fa-question fa-lg
+      href: https://example.com

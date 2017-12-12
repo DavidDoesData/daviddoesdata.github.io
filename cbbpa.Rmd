@@ -8,12 +8,12 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
 ## College Basketball Prediction Engine
-####[<i class="fa fa-github fa-lg"></i> Repo]("https://github.com/DavidDoesData/cbbpa") [<i class="fa fa-youtube-play fa-lg"></i> Playlist]("https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_")
-
+####[<i class="fa fa-github fa-lg"></i> Repo](https://github.com/DavidDoesData/cbbpa)       [<i class="fa fa-youtube-play fa-lg"></i> Playlist](https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_)
+***
 
 ### Project Goal
 
-This project is an attempt at making a predictive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads.
+This project is an attempt at making a predictive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads. The goal is to be more than 52.4% accurate in predictions.
 
 ### The Data
 
@@ -92,9 +92,34 @@ First things first, we only need home games. The away games for any team will sh
 </li>
 ```
 
-Second, we want the opponents team name and id. We can find that here:
+Second, who are they playing?
 ```
-<a href="http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels">
-  Iona
-</a>
+<li class="team-name">
+  <a href="http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels">
+    Iona
+  </a>
+</li>
 ```
+
+Did they win? Did they lose?
+```
+<li class="game-status win">
+```
+
+What's the score?
+```
+<li class="score">
+  <a href="//www.espn.com/ncb/recap/_/gameId/400989985">
+    69-67
+  </a>
+</li>
+```
+
+When did they play?
+```
+<td>
+  Fri, Nov 10
+</td>
+```
+
+All of that information will be written to a csv, so I can munge the data later. That's the first thing that needs to happen.

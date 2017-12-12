@@ -15,7 +15,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -100,34 +100,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 61px;
+  padding-top: 51px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 
 .section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 </style>
 
@@ -187,7 +187,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-github"></span>
+    <span class="fa fa-git-square"></span>
      
     Projects
      
@@ -239,11 +239,12 @@ $(document).ready(function () {
 <div id="college-basketball-prediction-engine" class="section level2">
 <h2>College Basketball Prediction Engine</h2>
 <div id="repo-playlist" class="section level4">
-<h4><a href="%22https://github.com/DavidDoesData/cbbpa%22"><i class="fa fa-github fa-lg"></i> Repo</a> <a href="%22https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_%22"><i class="fa fa-youtube-play fa-lg"></i> Playlist</a></h4>
+<h4><a href="https://github.com/DavidDoesData/cbbpa"><i class="fa fa-github fa-lg"></i> Repo</a> <a href="https://www.youtube.com/playlist?list=PLuMZyjodYY6T9WM2Opa_-vwig970tYA5_"><i class="fa fa-youtube-play fa-lg"></i> Playlist</a></h4>
+<hr />
 </div>
 <div id="project-goal" class="section level3">
 <h3>Project Goal</h3>
-<p>This project is an attempt at making a predictive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads.</p>
+<p>This project is an attempt at making a predictive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads. The goal is to be more than 52.4% accurate in predictions.</p>
 </div>
 <div id="the-data" class="section level3">
 <h3>The Data</h3>
@@ -306,10 +307,25 @@ YYYY: The Year</code></pre>
 <pre><code>&lt;li class=&quot;game-status&quot;&gt;
   vs
 &lt;/li&gt;</code></pre>
-<p>Second, we want the opponents team name and id. We can find that here:</p>
-<pre><code>&lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
-  Iona
-&lt;/a&gt;</code></pre>
+<p>Second, who are they playing?</p>
+<pre><code>&lt;li class=&quot;team-name&quot;&gt;
+  &lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
+    Iona
+  &lt;/a&gt;
+&lt;/li&gt;</code></pre>
+<p>Did they win? Did they lose?</p>
+<pre><code>&lt;li class=&quot;game-status win&quot;&gt;</code></pre>
+<p>What’s the score?</p>
+<pre><code>&lt;li class=&quot;score&quot;&gt;
+  &lt;a href=&quot;//www.espn.com/ncb/recap/_/gameId/400989985&quot;&gt;
+    69-67
+  &lt;/a&gt;
+&lt;/li&gt;</code></pre>
+<p>When did they play?</p>
+<pre><code>&lt;td&gt;
+  Fri, Nov 10
+&lt;/td&gt;</code></pre>
+<p>All of that information will be written to a csv, so I can munge the data later. That’s the first thing that needs to happen.</p>
 </div>
 </div>
 

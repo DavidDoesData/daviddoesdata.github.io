@@ -8,13 +8,12 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Projects"
-      icon: fa-git-square
       menu:
-        - text: "David Does Data"
-          href: thissite.html
         - text: "College Basketball Prediction Engine"
           href: cbbpa.html
   right:
+    - icon: fa-github fa-lg
+      href: https://github.com/DavidDoesData/
     - icon: fa-youtube fa-lg
       href: https://www.youtube.com/channel/UCE9_UEg8Dbu-8Gi0QoixIhw
     - icon: fa-twitter fa-lg

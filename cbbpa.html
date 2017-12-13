@@ -245,11 +245,17 @@ $(document).ready(function () {
 </div>
 <div id="project-goal" class="section level3">
 <h3>Project Goal</h3>
-<p>This project is an attempt at making a predictive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads. The goal is to be more than 52.4% accurate in predictions.</p>
+<p>This project is an attempt at making a predictive model for NCAA Div I Men’s Basketball games. In addition to predicting winners, we want to predict point spreads.</p>
+</div>
+<div id="measuring-success" class="section level3">
+<h3>Measuring Success</h3>
+<p>We will “bet” on games trying to pick the winner, including the spread. I will be getting spreads and odds from bet365.com. The goal is to be more than 52.4% accurate in predictions on those games. Assuming a game has a well handicapped spread, the odds for both teams will be -110. There’s some math somewhere, that I should include sometime, that tells us that the break even point is 52.4% accuracy with those odds.</p>
+<p>Success is “making money”.</p>
+<p>Failure is not “making money”.</p>
 </div>
 <div id="the-data" class="section level3">
 <h3>The Data</h3>
-<p>I’m scraping it from ESPN.com. I’ll need to write a web crawler/scraper to collect the data. Since I’m coding in R, I’ll be using Rvest.</p>
+<p>I’m scraping it from ESPN.com. I’ll need to write a web crawler/scraper to collect the data. Since I’m coding in R, I’ll be using Rvest. Why? Because I know you can scrape with it. :|</p>
 <pre class="r"><code>install.packages(&#39;rvest&#39;)</code></pre>
 <p>This is where we’re looking for links to crawl: <a href="http://www.espn.com/mens-college-basketball/teams">ESPN</a></p>
 <p>We can find the Team Ids by searching for something that looks like this:</p>
@@ -259,52 +265,30 @@ $(document).ready(function () {
 XXXX: Team Id
 YYYY: The Year</code></pre>
 <p>We need the year, so we can go back in time and grab historical results.</p>
-<p>The html structure we need to scrape and build a dataset from:</p>
-<pre><code>&lt;tr class=&quot;oddrow team-41-314&quot;&gt;
-  &lt;td&gt;
-    Fri, Nov 10
-  &lt;/td&gt;
-  &lt;td align=&quot;left&quot;&gt;
-    &lt;ul class=&quot;game-schedule&quot;&gt;
-      &lt;li class=&quot;game-status&quot;&gt;
-        vs
-      &lt;/li&gt;
-      &lt;li class=&quot;team-logo-small logo-ncaa-small&quot;&gt;
-        &lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
-          &lt;img src=&quot;http://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/314.png&amp;amp;w=80&amp;amp;h=80&amp;amp;transparent=true&quot;&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-      
-      &lt;li class=&quot;team-name&quot;&gt;
-        &lt;a href=&quot;http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels&quot;&gt;
-          Iona
-        &lt;/a&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/td&gt;
-  &lt;td&gt;
-    &lt;ul class=&quot;game-schedule&quot;&gt;
-      &lt;li class=&quot;game-status win&quot;&gt;
-        &lt;span class=&quot;greenfont&quot;&gt;
-          W
-        &lt;/span&gt;
-      &lt;/li&gt;
-      
-      &lt;li class=&quot;score&quot;&gt;
-        &lt;a href=&quot;//www.espn.com/ncb/recap/_/gameId/400989985&quot;&gt;
-          69-67
-        &lt;/a&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/td&gt;
-  &lt;td&gt;
-    1-0 (0-0)
-  &lt;/td&gt;
-&lt;/tr&gt;</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: If a year is not in the set, it will display the 2017-18 schedule.</p>
+</blockquote>
+<p>Psuedo code:</p>
+<pre><code>For each teamId{ 
+  YEAR = 2018
+  read_html = http://www.espn.com/mens-college-basketball/team/schedule/_/id/teamId/year/YEAR
+  if read_html$year_on_page == YEAR{
+    scrapeTheData()
+    YEAR = YEAR-1
+  }
+}
+  </code></pre>
 </div>
-<div id="lets-break-that-down-a-bit" class="section level3">
-<h3>Let’s Break That Down A Bit</h3>
-<p>First things first, we only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the followinf:</p>
+<div id="lets-break-schedules-down" class="section level3">
+<h3>Let’s Break Schedules Down</h3>
+<p>When did they play?</p>
+<pre><code>&lt;td&gt;
+  Fri, Nov 10
+&lt;/td&gt;</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: The year has to be inferred from the dataset you’re looking at, and the date the game was played.</p>
+</blockquote>
+<p>We only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the following:</p>
 <pre><code>&lt;li class=&quot;game-status&quot;&gt;
   vs
 &lt;/li&gt;</code></pre>
@@ -315,17 +299,63 @@ YYYY: The Year</code></pre>
   &lt;/a&gt;
 &lt;/li&gt;</code></pre>
 <p>Did they win? Did they lose?</p>
-<pre><code>&lt;li class=&quot;game-status win&quot;&gt;</code></pre>
+<pre><code>&lt;li class=&quot;game-status win&quot;&gt;
+&lt;li class=&quot;game-status loss&quot;&gt;</code></pre>
 <p>What’s the score?</p>
 <pre><code>&lt;li class=&quot;score&quot;&gt;
   &lt;a href=&quot;//www.espn.com/ncb/recap/_/gameId/400989985&quot;&gt;
     69-67
   &lt;/a&gt;
 &lt;/li&gt;</code></pre>
-<p>When did they play?</p>
-<pre><code>&lt;td&gt;
-  Fri, Nov 10
-&lt;/td&gt;</code></pre>
+<p>We need to grab the gameId from the url that’s buried in the above anchor tag. We’ll use it to get the box scores.</p>
+</div>
+<div id="lets-break-down-box-scores" class="section level3">
+<h3>Let’s Break Down Box Scores</h3>
+<p>The url</p>
+<pre><code>http://www.espn.com/mens-college-basketball/boxscore?gameId=400989985</code></pre>
+<p>How the score by half is structured:</p>
+<pre><code>&lt;tbody&gt;
+    &lt;tr&gt;
+        &lt;td class=&quot;team-name&quot;&gt;IONA&lt;/td&gt;
+        &lt;td&gt;23&lt;/td&gt;
+        &lt;td&gt;44&lt;/td&gt;
+        &lt;td class=&quot;final-score&quot;&gt;67&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class=&quot;team-name&quot;&gt;ALBY&lt;/td&gt;
+        &lt;td&gt;34&lt;/td&gt;
+        &lt;td&gt;35&lt;/td&gt;
+        &lt;td class=&quot;final-score&quot;&gt;69&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tbody&gt;</code></pre>
+<p>There are no identifers for which half is which, we need to be careful when grabbing that information.</p>
+<p>How the player rows are structured:</p>
+<pre><code>&lt;tr class=&quot;&quot;&gt;
+    &lt;td class=&quot;name&quot; style=&quot;display: none;&quot;&gt;
+        &lt;a name=&quot;&amp;amp;lpos=ncb:game:boxscore:playercard&quot; href=&quot;http://www.espn.com/mens-college-basketball/player/_/id/3907611/roland-griffin&quot;&gt;
+            &lt;span&gt;R. Griffin&lt;/span&gt;
+            &lt;span class=&quot;abbr&quot;&gt;R. Griffin&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;span class=&quot;position&quot;&gt;F&lt;/span&gt;
+    &lt;/td&gt;
+    &lt;td class=&quot;min&quot; style=&quot;display: table-cell;&quot;&gt;33&lt;/td&gt;
+    &lt;td class=&quot;fg&quot; style=&quot;display: table-cell;&quot;&gt;3-6&lt;/td&gt;
+    &lt;td class=&quot;3pt&quot; style=&quot;display: table-cell;&quot;&gt;0-0&lt;/td&gt;
+    &lt;td class=&quot;ft&quot; style=&quot;display: table-cell;&quot;&gt;2-3&lt;/td&gt;
+    &lt;td class=&quot;oreb&quot; style=&quot;display: table-cell;&quot;&gt;0&lt;/td&gt;
+    &lt;td class=&quot;dreb&quot; style=&quot;display: table-cell;&quot;&gt;3&lt;/td&gt;
+    &lt;td class=&quot;reb&quot; style=&quot;display: table-cell;&quot;&gt;3&lt;/td&gt;
+    &lt;td class=&quot;ast&quot; style=&quot;display: table-cell;&quot;&gt;1&lt;/td&gt;
+    &lt;td class=&quot;stl&quot; style=&quot;display: table-cell;&quot;&gt;1&lt;/td&gt;
+    &lt;td class=&quot;blk&quot; style=&quot;display: table-cell;&quot;&gt;2&lt;/td&gt;
+    &lt;td class=&quot;to&quot; style=&quot;display: table-cell;&quot;&gt;1&lt;/td&gt;
+    &lt;td class=&quot;pf&quot; style=&quot;display: table-cell;&quot;&gt;2&lt;/td&gt;
+    &lt;td class=&quot;pts&quot; style=&quot;display: table-cell;&quot;&gt;8&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+<p>This is mor straightforward than the schedule page. Each &lt;td&gt; has a class that is the name of the variable we are capturing. The only tricky one is the name, but it looks like we can use what’s in <span class="abbr"> and we can capture the position from <span class="position">.</p>
+<blockquote>
+<p><strong>NOTE</strong>: It’s a bit difficult to keep track of the team for each table. Just be careful.</p>
+</blockquote>
 <p>All of that information will be written to a csv, so I can munge the data later. That’s the first thing that needs to happen.</p>
 </div>
 </div>

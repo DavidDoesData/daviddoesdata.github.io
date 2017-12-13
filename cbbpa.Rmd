@@ -13,11 +13,18 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 ### Project Goal
 
-This project is an attempt at making a predictive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads. The goal is to be more than 52.4% accurate in predictions.
+This project is an attempt at making a predictive model for NCAA Div I Men's Basketball games. In addition to predicting winners, we want to predict point spreads. 
+
+### Measuring Success
+We will "bet" on games trying to pick the winner, including the spread. I will be getting spreads and odds from bet365.com. The goal is to be more than 52.4% accurate in predictions on those games. Assuming a game has a well handicapped spread, the odds for both teams will be -110. There's some math somewhere, that I should include sometime, that tells us that the break even point is 52.4% accuracy with those odds.
+
+Success is "making money".
+
+Failure is not "making money".
 
 ### The Data
 
-I'm scraping it from ESPN.com. I'll need to write a web crawler/scraper to collect the data. Since I'm coding in R, I'll be using Rvest.
+I'm scraping it from ESPN.com. I'll need to write a web crawler/scraper to collect the data. Since I'm coding in R, I'll be using Rvest. Why? Because I know you can scrape with it. :|
 
 
 ```R
@@ -39,53 +46,31 @@ YYYY: The Year
 ```
 We need the year, so we can go back in time and grab historical results.
 
-The html structure we need to scrape and build a dataset from:
+> **NOTE**: If a year is not in the set, it will display the 2017-18 schedule.
+
+Psuedo code:
 ```
-<tr class="oddrow team-41-314">
-  <td>
-    Fri, Nov 10
-  </td>
-  <td align="left">
-    <ul class="game-schedule">
-      <li class="game-status">
-        vs
-      </li>
-      <li class="team-logo-small logo-ncaa-small">
-        <a href="http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels">
-          <img src="http://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/314.png&amp;w=80&amp;h=80&amp;transparent=true">
-        </a>
-      </li>
-      
-      <li class="team-name">
-        <a href="http://www.espn.com/mens-college-basketball/team/_/id/314/iona-gaels">
-          Iona
-        </a>
-      </li>
-    </ul>
-  </td>
-  <td>
-    <ul class="game-schedule">
-      <li class="game-status win">
-        <span class="greenfont">
-          W
-        </span>
-      </li>
-      
-      <li class="score">
-        <a href="//www.espn.com/ncb/recap/_/gameId/400989985">
-          69-67
-        </a>
-      </li>
-    </ul>
-  </td>
-  <td>
-    1-0 (0-0)
-  </td>
-</tr>
+For each teamId{ 
+  YEAR = 2018
+  read_html = http://www.espn.com/mens-college-basketball/team/schedule/_/id/teamId/year/YEAR
+  if read_html$year_on_page == YEAR{
+    scrapeTheData()
+    YEAR = YEAR-1
+  }
+}
+  
 ```
 
-### Let's Break That Down A Bit
-First things first, we only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the followinf:
+### Let's Break Schedules Down
+When did they play?
+```
+<td>
+  Fri, Nov 10
+</td>
+```
+> **NOTE**: The year has to be inferred from the dataset you're looking at, and the date the game was played.
+
+We only need home games. The away games for any team will show up on the opponents pages as home games. They are identified by the following:
 ```
 <li class="game-status">
   vs
@@ -104,6 +89,7 @@ Second, who are they playing?
 Did they win? Did they lose?
 ```
 <li class="game-status win">
+<li class="game-status loss">
 ```
 
 What's the score?
@@ -115,11 +101,61 @@ What's the score?
 </li>
 ```
 
-When did they play?
+We need to grab the gameId from the url that's buried in the above anchor tag. We'll use it to get the box scores.
+
+
+### Let's Break Down Box Scores
+The url
 ```
-<td>
-  Fri, Nov 10
-</td>
+http://www.espn.com/mens-college-basketball/boxscore?gameId=400989985
 ```
+
+How the score by half is structured:
+```
+<tbody>
+	<tr>
+		<td class="team-name">IONA</td>
+		<td>23</td>
+		<td>44</td>
+		<td class="final-score">67</td>
+	</tr>
+	<tr>
+		<td class="team-name">ALBY</td>
+		<td>34</td>
+		<td>35</td>
+		<td class="final-score">69</td>
+	</tr>
+</tbody>
+```
+There are no identifers for which half is which, we need to be careful when grabbing that information.
+
+How the player rows are structured:
+```
+<tr class="">
+	<td class="name" style="display: none;">
+		<a name="&amp;lpos=ncb:game:boxscore:playercard" href="http://www.espn.com/mens-college-basketball/player/_/id/3907611/roland-griffin">
+			<span>R. Griffin</span>
+			<span class="abbr">R. Griffin</span>
+		</a>
+		<span class="position">F</span>
+	</td>
+	<td class="min" style="display: table-cell;">33</td>
+	<td class="fg" style="display: table-cell;">3-6</td>
+	<td class="3pt" style="display: table-cell;">0-0</td>
+	<td class="ft" style="display: table-cell;">2-3</td>
+	<td class="oreb" style="display: table-cell;">0</td>
+	<td class="dreb" style="display: table-cell;">3</td>
+	<td class="reb" style="display: table-cell;">3</td>
+	<td class="ast" style="display: table-cell;">1</td>
+	<td class="stl" style="display: table-cell;">1</td>
+	<td class="blk" style="display: table-cell;">2</td>
+	<td class="to" style="display: table-cell;">1</td>
+	<td class="pf" style="display: table-cell;">2</td>
+	<td class="pts" style="display: table-cell;">8</td>
+</tr>
+```
+This is mor straightforward than the schedule page. Each \<td> has a class that is the name of the variable we are capturing. The only tricky one is the name, but it looks like we can use what's in <span class="abbr"> and we can capture the position from <span class="position">.
+
+> **NOTE**: It's a bit difficult to keep track of the team for each table. Just be careful.
 
 All of that information will be written to a csv, so I can munge the data later. That's the first thing that needs to happen.

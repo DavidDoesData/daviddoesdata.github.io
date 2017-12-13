@@ -51,12 +51,27 @@ We need the year, so we can go back in time and grab historical results.
 Psuedo code:
 ```
 For each teamId{ 
+
   YEAR = 2018
-  read_html = http://www.espn.com/mens-college-basketball/team/schedule/_/id/teamId/year/YEAR
-  if read_html$year_on_page == YEAR{
-    scrapeTheData()
-    YEAR = YEAR-1
-  }
+  continue = true
+  
+  do{
+  
+    page_request = http://www.espn.com/mens-college-basketball/team/schedule/_/id/teamId/year/YEAR
+    
+    if page_request$year_on_page == YEAR{
+    
+      scrapeTheData()
+      YEAR = YEAR-1
+      
+    }else{
+    
+      continue = false
+      
+    }
+    
+  }while(continue)
+  
 }
   
 ```

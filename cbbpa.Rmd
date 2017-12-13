@@ -169,7 +169,7 @@ How the player rows are structured:
 	<td class="pts" style="display: table-cell;">8</td>
 </tr>
 ```
-This is mor straightforward than the schedule page. Each \<td> has a class that is the name of the variable we are capturing. The only tricky one is the name, but it looks like we can use what's in <span class="abbr"> and we can capture the position from <span class="position">.
+This is more straightforward than the schedule page. Each \<td> has a class that is the name of the variable we are capturing. The only tricky one is the name, but it looks like we can use what's in <span class="abbr"> and we can capture the position from <span class="position">.
 
 > **NOTE**: It's a bit difficult to keep track of the team for each table. Just be careful.
 
